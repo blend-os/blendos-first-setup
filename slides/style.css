@@ -99,7 +99,7 @@ html, body {
 }
 
 .slides {
-  width: calc(100vw * 7);
+  width: calc(100vw * 8);
   animation-duration: 0.3s;
   animation-iteration-count: 1;
   animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
@@ -173,6 +173,7 @@ input:checked + .slider:before {
 @keyframes next-5 { 0% { margin-left: -300vw } 100% { margin-left: -400vw; } }
 @keyframes next-6 { 0% { margin-left: -400vw } 100% { margin-left: -500vw; } }
 @keyframes next-7 { 0% { margin-left: -500vw } 100% { margin-left: -600vw; } }
+@keyframes next-8 { 0% { margin-left: -600vw } 100% { margin-left: -700vw; } }
 
 @keyframes prev-1 { 0% { margin-left: -100vw } 100% { margin-left: 0; } }
 @keyframes prev-2 { 0% { margin-left: -200vw } 100% { margin-left: -100vw; } }
@@ -180,6 +181,7 @@ input:checked + .slider:before {
 @keyframes prev-4 { 0% { margin-left: -400vw } 100% { margin-left: -300vw; } }
 @keyframes prev-5 { 0% { margin-left: -500vw } 100% { margin-left: -400vw; } }
 @keyframes prev-6 { 0% { margin-left: -600vw } 100% { margin-left: -500vw; } }
+@keyframes prev-7 { 0% { margin-left: -700vw } 100% { margin-left: -600vw; } }
 
 .fa {
   font-size: 1.5em;

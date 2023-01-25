@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+
+import gi
+
+gi.require_version('Gtk', '4.0')
+gi.require_version('Gio', '2.0')
+gi.require_version('Adw', '1')
+from gi.repository import Gtk, Gio, Gdk, Adw, GLib
+
+gi.require_version('WebKit2', '5.0')
+from gi.repository import WebKit2 as WebKit
+
+import os, sys
+
+class QuitDialog(Adw.MessageDialog):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.set_heading(heading='Are you sure you want to quit?')
+        self.set_body(body='Setup will launch again the next time you log in.')
+        self.add_response(Gtk.ResponseType.CANCEL.value_nick, 'No')
+        self.set_response_appearance(
+            response=Gtk.ResponseType.CANCEL.value_nick,
+            appearance=Adw.ResponseAppearance.DESTRUCTIVE
+        )
+        self.add_response(Gtk.ResponseType.OK.value_nick, 'Yes')
+        self.set_response_appearance(
+            response=Gtk.ResponseType.OK.value_nick,
+            appearance=Adw.ResponseAppearance.SUGGESTED
+        )
+        self.connect('response', self.dialog_response)
+
+    def dialog_response(self, dialog, response):
+        if response == Gtk.ResponseType.OK.value_nick:
+            exit()
+        elif response == Gtk.ResponseType.CANCEL.value_nick:
+            print(end='')
+
+class PythonWebView:
+    def __init__(self):
+        if os.path.exists(os.path.expanduser('~/.config/blendos-first-setup-done')):
+            exit()
+
+        GLib.set_application_name('First Setup')
+        GLib.set_prgname('First Setup')
+
+        self.window = Adw.Window()
+        self.window.set_default_size(900, 600)
+        self.window.set_resizable(False)
+
+        self.style_manager = Adw.StyleManager().get_default()
+
+        self.wview = WebKit.WebView()
+        self.wview.load_uri(f'file://{sys.path[0]}/slides/index.html')
+
+        self.wview_settings = WebKit.Settings()
+        self.wview_settings.set_enable_write_console_messages_to_stdout(True)
+        self.wview.set_settings(self.wview_settings)
+
+        self.wview.connect('script_dialog', self.handle_msg)
+
+        self.window.set_content(self.wview)
+        self.window.connect('close-request', self.on_quit)
+        self.window.show()
+
+
+    def handle_msg(self, web_view, dialog):
+        if dialog.get_message() == 'open_console':
+            Gio.DesktopAppInfo.new('org.gnome.Console.desktop').launch_uris()
+        elif dialog.get_message() == 'flathub_store':
+            Gio.DesktopAppInfo.new('flathub-ui.desktop').launch_uris()
+        elif dialog.get_message() == 'dark_theme':
+            gsettings = Gio.Settings.new('org.gnome.desktop.interface')
+            gsettings.set_string('gtk-theme', 'Adwaita-dark')
+            gsettings.set_string('color-scheme', 'prefer-dark')
+        elif dialog.get_message() == 'light_theme':
+            gsettings = Gio.Settings.new('org.gnome.desktop.interface')
+            gsettings.set_string('gtk-theme', 'Adwaita-light')
+            gsettings.set_string('color-scheme', 'prefer-light')
+        elif dialog.get_message() == 'quit':
+            if not os.path.exists(os.path.expanduser('~/.config/blendos-first-setup-done')):
+                if not os.path.exists(os.path.expanduser('~/.config')): os.mkdir(os.path.expanduser('~/.config'))
+                with open(os.path.expanduser('~/.config/blendos-first-setup-done'), 'w+') as fp:
+                    pass
+            exit()
+        return True
+
+    def on_quit(self, widget=None, *data):
+        dialog = QuitDialog(transient_for=self.window)
+        dialog.present()
+        return True
+
+if __name__ == "__main__":
+    PythonWebView()
+    GLib.MainLoop().run()

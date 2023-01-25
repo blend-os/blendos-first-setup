@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=First Setup
+Exec=blendos-first-setup
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true

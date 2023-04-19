@@ -1,0 +1,12 @@
+#!/bin/bash
+
+gsettings set org.gnome.desktop.app-folders folder-children "['web-apps', 'linux-apps', 'android-apps']"
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/linux-apps/ name "Web Apps"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ categories "['BlendWebApp']"
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/linux-apps/ name "Linux Apps"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ categories "['Utility', 'chrome-apps', 'Game', 'Graphics', 'Network', 'WebBrowser', 'Email', 'Office', 'Development', 'Science', 'AudioVideo', 'Audio', 'Video', 'System', 'Settings', 'Accessibility, 'Wine', 'X-Wine', 'Wine-Programs-Accessories']"
+
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/linux-apps/ name "Android Apps"
+gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/accessories/ categories "['X-WayDroid-App']"

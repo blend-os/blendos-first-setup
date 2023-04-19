@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="height=device-height, initial-scale=1.0" />
+    <link rel="stylesheet" href="icons/css/all.min.css">
+    <link rel="stylesheet" href="external/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <title>Setup</title>
+  </head>
+  <body>
+    <div class="content">
+      <button role="button" id="back-button" onclick="back()"><span class="text"><i class="fa fa-angle-left"></i></span></button>
+      <div class="slides" id="slides">
+        <div class="slide_content 1">
+          <div class="show">
+            <h1>Welcome to blendOS!</h1>
+            <p class="mt-4 description">blendOS is a seamless blend of <b>Linux distributions</b>, <b>Android apps</b> and <b>web apps</b>. Click on <b>Get Started</b>, to put it simply, get started.</p>
+            <button class="mt-5 button-styled show" role="button" onclick="next()"><span class="text">Get Started</span></button>
+          </div>
+        </div>
+        <div class="slide_content 2">
+          <div class="show">
+            <h1>Install apps from the regular Arch repos</h1>
+            <p class="mt-4 description">You can install apps from the Arch repositories, as well as Chaotic-AUR just like you would on a regular Arch system (thanks to overlays).</p>
+            <button class="mt-5 button-styled show" role="button" onclick="next()"><span class="text">Next</span></button>
+          </div>
+        </div>
+        <div class="slide_content 3">
+          <div class="show">
+            <h1>Or use apps from any distribution</h1>
+            <p class="mt-4 description">Create containers for Linux distros from <b>blendOS Settings</b>, after which you can use their package managers, desktop apps and binaries as though you were running the distros.</p>
+            <div class="mt-5 show">
+              <button class="button-styled" role="button" onclick="require('child_process').spawn('blend-settings')" style="margin-right: 0.5em;"><span class="text">Open blendOS Settings</span></button>
+              <button class="button-styled" role="button" onclick="next()"><span class="text">Next</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="slide_content 4" id="android-apps-slide">
+          <div class="show">
+            <h1>Install Android apps</h1>
+            <p class="mt-4 description">If an app isn't available on Linux, you could use its Android version too, as though it were a native Android app (only in <b>Wayland sessions</b>, as WayDroid is used behind-the-scenes). If you're an Android developer, apps you run from Android Studio will appear as native blendOS apps. Get started by opening the <b>Android Apps</b> tab in <b>blendOS Settings</b>.</p>
+            <span style="font-size: 1rem;" class="mt-3 description d-none" id="waydroid-warning">You must log out, and select the Wayland session to be able to use Android apps (X11 isn't supported).</span>
+            <div class="mt-5 show">
+              <button class="button-styled" id="waydroid-blend-settings-button" role="button" onclick="require('child_process').spawn('blend-settings')" style="margin-right: 0.5em;"><span class="text">Open blendOS Settings</span></button>
+              <button class="button-styled" role="button" onclick="next()"><span class="text">Next</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="slide_content 5">
+          <div class="show">
+            <h1>Web App Support</h1>
+            <p class="mt-4 description">If that wasn't enough, you can also install web apps from the <b>blendOS Web Store</b>, or request your favorite web apps to be added.</p>
+            <div class="mt-5 show">
+              <button class="button-styled" role="button" onclick="require('child_process').spawn('blend-web-store')" style="margin-right: 0.5em;"><span class="text">Open Web Store</span></button>
+              <button class="button-styled" role="button" onclick="next()"><span class="text">Next</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="slide_content 6">
+          <div class="show">
+            <h1><i><s>Partially</s></i> Immutable</h1>
+            <p class="mt-4 description">
+              <b>/usr/bin</b>, <b>/usr/sbin</b> and <b>/usr/share/*</b> cannot be modified directly. Instead, overlays are mounted on top of them, allowing you to use blendOS like a Linux distribution. Snapshots of the current state are created on boot and every 12 hours. This behaviour can be configured from blendOS Settings.
+              <br>
+              <span style="font-size: 1rem;" class="mt-3">(a future update will also add support for merging the current state with the filesystem)</span>
+            </p>
+            <button class="mt-4 button-styled show" role="button" onclick="next()"><span class="text">Next</span></button>
+          </div>
+        </div>
+        <div class="slide_content 7" id="possibly_final">
+          <div class="show">
+            <h1>Auto-categorize Apps</h1>
+            <p class="mt-4 description">
+              Since you're using GNOME, would you like to automatically categorize Linux apps, Android apps and web apps? (recommended)
+            </p>
+            <div class="mt-5 show">
+              <button class="button-styled" role="button" onclick="categorize_apps_gnome()" style="margin-right: 0.5em;"><span class="text">Yes</span></button>
+              <button class="button-styled" role="button" onclick="require('child-process').spawn('categorize_apps_gnome'); next()"><span class="text">No</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="slide_content 8" id="actual_final">
+          <div class="show">
+            <h1>You're all set!</h1>
+            <br>
+            <p class="description">blendOS, your immutable operating system is ready to go! Enjoy a stable and performant computing experience.</p>
+            <br><br>
+            <button class="button-styled show" role="button" onclick="require('electron').ipcRenderer.postMessage('app-quit')"><span class="text">Start using blendOS</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <link rel="stylesheet" href="external/js/bootstrap.bundle.min.js">
+  </body>
+  <script>
+    window.$ = require('jquery')
+
+    page = 1
+
+    function next() {
+      page++
+      [].forEach.call(document.getElementsByClassName('slides'), function (el) {
+        el.style.marginLeft = `${(page-1)*-100}vw`
+        document.getElementById('back-button').style.display = "flex"
+        if (page > 6) {
+          document.getElementById('back-button').style.display = "none"
+        }
+        el.style.animationName = `next-${page}`
+        el.style.animationFillMode = "forwards"
+        el.style.animationPlayState = "running"
+      })
+    }
+
+    function back() {
+      page--
+      [].forEach.call(document.getElementsByClassName('slides'), function (el) {
+        el.style.marginLeft = `${(page-1)*-100}vw`
+        if (page == 1) {
+          document.getElementById('back-button').style.display = "none"
+        }
+        el.style.animationName = `prev-${page}`
+        el.style.animationFillMode = "backwards"
+        el.style.animationPlayState = "running"
+      })
+    }
+
+    if (require('which').sync('waydroid', { nothrow: true }) == null) {
+      $('#android-apps-slide').remove()
+      $('#slides').css('width', '700vw')
+    }
+
+    if (!(require('process').env.XDG_SESSION_TYPE.toLowerCase().includes('wayland'))) {
+      $('#waydroid-warning').removeClass('d-none')
+      $('#waydroid-blend-settings-button').addClass('d-none')
+    }
+
+    if (!(require('process').env.ORIGINAL_XDG_CURRENT_DESKTOP.toLowerCase().includes('gnome'))) {
+      $('#possibly_final').html('')
+      $('#actual_final').contents().appendTo('#possibly_final')
+    }
+  </script>
+</html>

@@ -16,8 +16,6 @@ if [[ ! "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
     exit
 fi
 
-blend-web-store
-
 
 gsettings set org.gnome.desktop.app-folders folder-children "['android-apps', 'web-apps', 'accessories', 'chrome-apps', 'games', 'graphics', 'internet', 'office', 'programming', 'science', 'sound---video', 'system-tools', 'universal-access', 'wine']"
 

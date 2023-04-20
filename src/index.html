@@ -70,19 +70,7 @@
             <button class="mt-4 button-styled show" role="button" onclick="next()"><span class="text">Next</span></button>
           </div>
         </div>
-        <div class="slide_content 7" id="possibly_final">
-          <div class="show">
-            <h1>Auto-categorize Apps</h1>
-            <p class="mt-4 description">
-              Since you're using GNOME, would you like to automatically categorize Linux apps, Android apps and web apps? (recommended)
-            </p>
-            <div class="mt-5 show">
-              <button class="button-styled" role="button" onclick="categorize_apps_gnome()" style="margin-right: 0.5em;"><span class="text">Yes</span></button>
-              <button class="button-styled" role="button" onclick="require('child-process').spawn('categorize_apps_gnome'); next()"><span class="text">No</span></button>
-            </div>
-          </div>
-        </div>
-        <div class="slide_content 8" id="actual_final">
+        <div class="slide_content 7" id="actual_final">
           <div class="show">
             <h1>You're all set!</h1>
             <br>
@@ -136,11 +124,6 @@
     if (!(require('process').env.XDG_SESSION_TYPE.toLowerCase().includes('wayland'))) {
       $('#waydroid-warning').removeClass('d-none')
       $('#waydroid-blend-settings-button').addClass('d-none')
-    }
-
-    if (!(require('process').env.ORIGINAL_XDG_CURRENT_DESKTOP.toLowerCase().includes('gnome'))) {
-      $('#possibly_final').html('')
-      $('#actual_final').contents().appendTo('#possibly_final')
     }
   </script>
 </html>

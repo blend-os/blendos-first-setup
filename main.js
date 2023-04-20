@@ -49,6 +49,7 @@ app.whenReady().then(() => {
   if (existsSync(require('os').homedir() + '/.config/blendos-first-setup-done')) {
     app.quit()
   } else {
+    require('child_process').spawn('categorize_apps_gnome')
     setTimeout(createWindow, 2000)
   }
 })

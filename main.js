@@ -5,9 +5,8 @@ var mainWindow = undefined
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    minWidth: 800,
-    minHeight: 600,
-    width: 800,
+    minWidth: 900,
+    minHeight: 700,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,

@@ -25,7 +25,7 @@ function createWindow() {
     }).then((val) => {
       if (val.response === 1) {
         mainWindow.removeListener('close', handler)
-        app.quit()
+        mainWindow.close()
       }
     })
   }
@@ -37,7 +37,7 @@ function createWindow() {
 
     require('child_process').spawnSync('bash', ['-c', 'mkdir -p ~/.config; touch ~/.config/blendos-first-setup-done'])
 
-    app.quit()
+    mainWindow.close()
   })
 
   mainWindow.setMenu(null)
@@ -46,14 +46,8 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  if (existsSync(require('os').homedir() + '/.config/blendos-first-setup-done')) {
-    app.quit()
-  } else {
-    require('child_process').spawn('categorize_apps_gnome')
+  require('child_process').spawn('categorize_apps_gnome')
+  if (!(existsSync(require('os').homedir() + '/.config/blendos-first-setup-done'))) {
     setTimeout(createWindow, 2000)
   }
-})
-
-app.on('window-all-closed', function () {
-  app.quit()
 })

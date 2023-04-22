@@ -12,7 +12,11 @@
 # Copyright (c) 2017 Ben Godfrey
 
 
-if [[ ! "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
+timeout 2 waydroid session stop
+waydroid session start &
+
+
+if [[ ! "$ORIGINAL_XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
     exit
 fi
 

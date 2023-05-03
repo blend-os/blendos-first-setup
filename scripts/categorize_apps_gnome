@@ -12,9 +12,7 @@
 # Copyright (c) 2017 Ben Godfrey
 
 
-for c in "$(podman ps -a --no-trunc --sort=created --format {{.Names}})"; do
-    podman start "$c"
-done
+for c in $(podman ps -a --no-trunc --sort=created --format {{.Names}}); do podman start "$c"; done
 
 
 timeout 2 waydroid session stop

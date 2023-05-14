@@ -5,8 +5,9 @@ var mainWindow = undefined
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    minWidth: 900,
-    minHeight: 700,
+    width: 900,
+    height: 700,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -47,7 +48,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   require('child_process').spawn('categorize_apps_gnome')
-  if (!(existsSync(require('os').homedir() + '/.config/blendos-first-setup-done'))) {
+  if (!(existsSync(require('os').homedir() + '/.config/blendos-first-setup-done')) && !(existsSync('/run/archiso'))) {
     setTimeout(createWindow, 2000)
   }
 })

@@ -16,22 +16,22 @@
       <div class="slides" id="slides">
         <div class="slide_content 1">
           <div class="show">
-            <h1>Welcome to blendOS!</h1>
+            <img class="mt-3 mb-3" style="height: 300px;" src="./images/welcome-to-blendos.png"></img>
             <p class="mt-4 description">blendOS is a seamless blend of <b>Linux distributions</b>, <b>Android apps</b> and <b>web apps</b>. Click on <b>Get Started</b>, to put it simply, get started.</p>
             <button class="mt-5 button-styled show" role="button" onclick="next()"><span class="text">Get Started</span></button>
           </div>
         </div>
         <div class="slide_content 2">
           <div class="show">
-            <h1>Install apps from the regular Arch repos</h1>
-            <p class="mt-4 description">You can install apps from the Arch repositories, as well as Chaotic-AUR just like you would on a regular Arch system (thanks to overlays).</p>
-            <button class="mt-5 button-styled show" role="button" onclick="next()"><span class="text">Next</span></button>
+            <img class="mt-3 mb-3" style="height: 420px;" src="./images/gnome-software.png"></img>
+            <p class="description">Install popular apps such as <b>Steam</b> or <b>VS Code</b> from the <b>Software</b> store.</p>
+            <button class="mt-5 button-styled show" role="button" onclick="next()"><span class="text">Proceed to next page</span></button>
           </div>
         </div>
         <div class="slide_content 3">
           <div class="show">
-            <h1>Or use apps from any distribution</h1>
-            <p class="mt-4 description">Create containers for Linux distros from <b>blendOS Settings</b>, after which you can use their package managers, desktop apps and binaries as though you were running the distros.</p>
+            <img class="mt-3 mb-3" style="height: 300px;" src="./images/distros.svg"></img>
+            <p class="mt-5 description">Create containers for Linux distributions from <b>blendOS Settings</b>, after which you can use their apps.</p>
             <div class="mt-5 show">
               <button class="button-styled" role="button" onclick="require('child_process').spawn('blend-settings')" style="margin-right: 0.5em;"><span class="text">Open blendOS Settings</span></button>
               <button class="button-styled" role="button" onclick="next()"><span class="text">Next</span></button>
@@ -40,9 +40,8 @@
         </div>
         <div class="slide_content 4" id="android-apps-slide">
           <div class="show">
-            <h1>Install Android apps</h1>
-            <p class="mt-4 description">If an app isn't available on Linux, you could use its Android version too, as though it were a native Android app (only in <b>Wayland sessions</b>, as WayDroid is used behind-the-scenes). If you're an Android developer, apps you run from Android Studio will appear as native blendOS apps. Get started by opening the <b>Android Apps</b> tab in <b>blendOS Settings</b>.</p>
-            <span style="font-size: 1rem;" class="mt-3 description d-none" id="waydroid-warning">You must log out, and select the Wayland session to be able to use Android apps (X11 isn't supported).</span>
+            <img class="mt-3 mb-3" style="height: 300px;" src="./images/android.svg"></img>
+            <p class="mt-4 description">You can also install Android apps on blendOS. Get started by opening the <b>Android Apps</b> tab in <b>blendOS Settings</b>.</p>
             <div class="mt-5 show">
               <button class="button-styled" id="waydroid-blend-settings-button" role="button" onclick="require('child_process').spawn('blend-settings')" style="margin-right: 0.5em;"><span class="text">Open blendOS Settings</span></button>
               <button class="button-styled" role="button" onclick="next()"><span class="text">Next</span></button>
@@ -52,6 +51,7 @@
         <div class="slide_content 5">
           <div class="show">
             <h1>Web App Support</h1>
+            <img class="mt-4 mb-3" style="height: 250px;" src="./images/web-apps.svg"></img>
             <p class="mt-4 description">If that wasn't enough, you can also install web apps from the <b>blendOS Web Store</b>, or request your favorite web apps to be added.</p>
             <div class="mt-5 show">
               <button class="button-styled" role="button" onclick="require('child_process').spawn('blend-web-store')" style="margin-right: 0.5em;"><span class="text">Open Web Store</span></button>
@@ -61,20 +61,17 @@
         </div>
         <div class="slide_content 6">
           <div class="show">
-            <h1><i><s>Partially</s></i> Immutable</h1>
+            <img class="mt-4 mb-3" style="height: 250px;" src="./images/software-updates.svg"></img>
             <p class="mt-4 description">
-              <b>/usr/bin</b>, <b>/usr/sbin</b> and <b>/usr/share/*</b> cannot be modified directly. Instead, overlays are mounted on top of them, allowing you to use blendOS like a Linux distribution. Snapshots of the current state are created on boot and every 12 hours. This behaviour can be configured from blendOS Settings.
-              <br>
-              <span style="font-size: 1rem;" class="mt-3">(a future update will also add support for merging the current state with the filesystem)</span>
+              We have implemented a unique update solution that automatically downloads and applies updates on the next boot without any slowdowns or increased boot time.
             </p>
-            <button class="mt-4 button-styled show" role="button" onclick="next()"><span class="text">Next</span></button>
+            <button class="mt-5 button-styled show" role="button" onclick="next()"><span class="text">Proceed to next page</span></button>
           </div>
         </div>
         <div class="slide_content 7" id="actual_final">
           <div class="show">
-            <h1>You're all set!</h1>
-            <br>
-            <p class="description">blendOS, your immutable operating system is ready to go! Enjoy a stable and performant computing experience.</p>
+            <img class="mt-4 mb-3" style="height: 250px;" src="./images/complete.svg"></img>
+            <p class="mt-4 description">blendOS, your immutable operating system is ready to go! Enjoy a stable and performant computing experience.</p>
             <br><br>
             <button class="button-styled show" role="button" onclick="require('electron').ipcRenderer.postMessage('app-quit')"><span class="text">Start using blendOS</span></button>
           </div>
@@ -119,11 +116,6 @@
     if (require('which').sync('waydroid', { nothrow: true }) == null) {
       $('#android-apps-slide').remove()
       $('#slides').css('width', '700vw')
-    }
-
-    if (!(require('process').env.XDG_SESSION_TYPE.toLowerCase().includes('wayland'))) {
-      $('#waydroid-warning').removeClass('d-none')
-      $('#waydroid-blend-settings-button').addClass('d-none')
     }
   </script>
 </html>

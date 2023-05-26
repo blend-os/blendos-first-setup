@@ -43,12 +43,21 @@ function createWindow() {
 
   mainWindow.setMenu(null)
 
-  mainWindow.loadFile('src/index.html')
+  if (existsSync('/mnt/iso-update/.successful-update')) {
+    mainWindow.removeListener('close', handler)
+    mainWindow.loadFile('src/update.html')
+  } else {
+    mainWindow.loadFile('src/index.html')
+  }
 }
 
 app.whenReady().then(() => {
   require('child_process').spawn('categorize_apps_gnome')
-  if (!(existsSync(require('os').homedir() + '/.config/blendos-first-setup-done')) && !(existsSync('/run/archiso'))) {
-    setTimeout(createWindow, 2000)
+  if (!(existsSync('/run/archiso'))) {
+    if (!(existsSync(require('os').homedir() + '/.config/blendos-first-setup-done'))) {
+      setTimeout(createWindow, 2000)
+    } else if (existsSync('/mnt/iso-update/.successful-update')) {
+      setTimeout(createWindow, 2000)
+    }
   }
 })

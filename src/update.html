@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="height=device-height, initial-scale=1.0" />
+  <link rel="stylesheet" href="icons/css/all.min.css">
+  <link rel="stylesheet" href="external/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .slides {
+      width: 100vw;
+    }
+  </style>
+  <title>Successful Update</title>
+</head>
+
+<body>
+  <div class="content">
+    <button role="button" id="back-button" onclick="back()"><span class="text"><i
+          class="fa fa-angle-left"></i></span></button>
+    <div class="slides" id="slides">
+      <div class="slide_content 1">
+        <div class="show">
+          <img class="mt-3 mb-3" style="height: 300px;" src="./images/successful-update.svg"></img>
+          <p class="mt-4 description">Your system was updated successfully.</p>
+          <button class="mt-5 button-styled show" role="button" onclick="require('electron').ipcRenderer.postMessage('app-quit')"><span class="text">Close</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="external/js/bootstrap.bundle.min.js">
+</body>
+
+</html>

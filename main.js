@@ -22,7 +22,7 @@ function createWindow() {
       type: 'question',
       buttons: ['Cancel', 'Ok'],
       title: 'Are you sure?',
-      message: "It's recommended that you go through the First Setup guide, even if you're an experienced user of other Linux distributions. First Setup will be shown again on the next login."
+      message: "It's recommended that you go through the First Setup guide, even if you're a competent user of other Linux distributions. First Setup will be shown again on the next login."
     }).then((val) => {
       if (val.response === 1) {
         mainWindow.removeListener('close', handler)
@@ -41,7 +41,7 @@ function createWindow() {
     mainWindow.close()
   })
 
-  mainWindow.setMenu(null)
+  // mainWindow.setMenu(null)
 
   if (existsSync('/mnt/iso-update/.successful-update')) {
     mainWindow.removeListener('close', handler)

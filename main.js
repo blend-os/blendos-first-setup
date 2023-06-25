@@ -41,7 +41,7 @@ function createWindow() {
     mainWindow.close()
   })
 
-  // mainWindow.setMenu(null)
+  mainWindow.setMenu(null)
 
   if (existsSync('/mnt/iso-update/.successful-update')) {
     mainWindow.removeListener('close', handler)

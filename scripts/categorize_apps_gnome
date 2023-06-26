@@ -14,6 +14,7 @@
 
 for c in $(podman ps -a --no-trunc --sort=created --format {{.Names}}); do podman start "$c"; done
 
+xhost "+si:localuser:$USER"
 
 timeout 2 waydroid session stop
 waydroid session start &
